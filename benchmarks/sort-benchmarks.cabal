@@ -1,6 +1,6 @@
-Name:                   sort
+Name:                   sort-benchmarks
 Version:                0.0.0.1
-Synopsis:               A Haskell sorting toolkit
+Synopsis:               Haskell sorting toolkit benchmarks
 Description:            A library of general-purpose sorting utilities.
 Homepage:               https://github.com/cdornan/sort
 Author:                 Chris Dornan
@@ -19,10 +19,10 @@ Source-Repository head
     type:               git
     location:           https://github.com/cdornan/sort.git
 
-Library
-    Hs-Source-Dirs:     src
+Executable sort-benchmarks
+    Hs-Source-Dirs:     ../src src
 
-    Exposed-Modules:    Data.Sort
+    Main-Is:            sort-benchmarks.hs
 
     Default-Language:   Haskell2010
 
