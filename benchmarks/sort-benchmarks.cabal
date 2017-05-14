@@ -1,5 +1,5 @@
 Name:                   sort-benchmarks
-Version:                0.0.0.1
+Version:                0.0.1.0
 Synopsis:               Haskell sorting toolkit benchmarks
 Description:            A library of general-purpose sorting utilities.
 Homepage:               https://github.com/cdornan/sort
@@ -32,3 +32,5 @@ Executable sort-benchmarks
 
     Build-depends:
         base                 >= 4 && < 5
+      , criterion
+      , mwc-random
