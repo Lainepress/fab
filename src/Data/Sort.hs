@@ -1,6 +1,8 @@
 
 module Data.Sort
-  ( sort
+  ( L.sort
+  , L.sortBy
+  , sortON
 
   , monoidSortAssocs
   , monoidSortAssocsBy
@@ -14,8 +16,6 @@ module Data.Sort
   , groupSort
   , groupSortOn
   , groupSortBy
-
-  , sortOn
   ) where
 
 import qualified Data.List                as L
@@ -23,9 +23,8 @@ import           Data.Monoid
 import           Data.Ord
 
 
-sort :: Ord a => [a] -> [a]
-sort = L.sort
-
+sortON :: Ord b => (a->b) -> [a] -> [a]
+sortON chg = project . sortBy cmp_key . inject chg
 
 
 monoidSortAssocs :: (Monoid a,Ord k)
@@ -93,8 +92,9 @@ groupSortBy :: (a->a->Ordering)
 groupSortBy cmp grp = aggregate . sortBy cmp
   where
     aggregate []    = []
-    aggregate (h:t) = grp h eqs : aggregate rst
+    aggregate (h:t) = seq g $ g : aggregate rst
       where
+        g         = grp h eqs
         (eqs,rst) = span is_le t
 
         is_le x   = case cmp x h of
@@ -102,10 +102,6 @@ groupSortBy cmp grp = aggregate . sortBy cmp
           EQ -> True
           GT -> False
 
-
-
-sortOn :: Ord b => (a->b) -> [a] -> [a]
-sortOn chg = project . sortBy cmp_key . inject chg
 
 
 sortBy :: (a->a->Ordering) -> [a] -> [a]
@@ -130,12 +126,6 @@ cmp_key = comparing _a_key
 
 
 
-
-lte :: (a->a->Ordering) -> a -> a -> Bool
-lte cmp x y = case cmp x y of
-  LT -> True
-  EQ -> True
-  GT -> False
 
 monoid_group :: Monoid a => a -> [a] -> a
 monoid_group x xs = x <> mconcat xs
