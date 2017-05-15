@@ -43,4 +43,3 @@ gen_r1c :: IO [Int]
 gen_r1c = do
     gen <- initialize $ V.singleton 42
     sequence $ replicate 100 (uniformR (1,12) gen)
-    -- V.toList `fmap` uniformVector gen 100 :: IO [Int]
