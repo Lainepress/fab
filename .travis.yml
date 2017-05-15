@@ -129,7 +129,6 @@ install:
 - if [ -f configure.ac ]; then autoreconf -i; fi
 - |
   set -ex
-  cd benchmarks
   case "$BUILD" in
     release-stack|stack)
       stack --no-terminal --install-ghc $ARGS test --coverage --bench --only-dependencies
@@ -149,7 +148,6 @@ install:
 script:
 - |
   set -ex
-  cd benchmarks
   case "$BUILD" in
     stack)
       stack --no-terminal $ARGS test --bench --coverage --no-run-benchmarks --haddock --no-haddock-deps
@@ -177,7 +175,6 @@ script:
   set +ex
 
 after_script:
-  - cd benchmarks
   - travis_retry curl -L https://lainepress.github.io/shc/shc.tar.xz | tar xJ
   - |
     [ "$BUILD" == stack -a "$GHCVER" == 7.10.3 ] && ./shc --exclude-files=Text/RE/ZeInternals/QQ.hs --partial-coverage regex re-gen-cabals-test re-gen-modules-test re-include-test re-nginx-log-processor-test re-prep-test re-tests-test re-tutorial-test
